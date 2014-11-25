@@ -51,7 +51,7 @@ shinyUI(pageWithSidebar(
     tabsetPanel(
       tabPanel("מידע", dataTableOutput("datatable")),
       tabPanel("מפה", plotOutput("map")),
-      tabPanel("Trends", plotOutput("trends1"))
+      tabPanel("מגמה", plotOutput("trends1"))
     ) 
   )
   
