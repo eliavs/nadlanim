@@ -1,9 +1,18 @@
 library(shiny)
 
-shinyUI(pageWithSidebar(
+
+# Define UI for miles per gallon application
+shinyUI(fluidPage(
   
-  titlePanel("הורה נדלנים"),
- # sidebarLayout(
+  ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ## Application title
+  ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  titlePanel(h1("הורה נדלנים",align="right")),
+
+  ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ## Sidebar Panel
+  ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ sidebarLayout(position="right",
   sidebarPanel(
     
     wellPanel(
@@ -27,7 +36,8 @@ shinyUI(pageWithSidebar(
     wellPanel(   
       helpText(HTML("<b>סימן מים</b>")),
       checkboxInput("watermark", "האם להשתמש בסימן", TRUE)
-        ),
+     # helpText("Note: automatically disabled when 'Facet' is used.")
+    ),
         
     wellPanel(
       helpText(HTML("<b>ABOUT ME</b>")),
@@ -43,22 +53,22 @@ shinyUI(pageWithSidebar(
       HTML('Version 0.0.1 - Prototype')
     )
     
-  ,align="right"
+ ,align="right"
   ),
   
-
+  
+  ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ## Main Panel
+  ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  
   mainPanel(
     tabsetPanel(
       tabPanel("מידע", dataTableOutput("datatable")),
       tabPanel("מפה", plotOutput("map")),
-      tabPanel("מגמה", plotOutput("trends1"))
+      tabPanel("מגמות", plotOutput("trends1"))
     ) 
   )
+ )
   
 )
 )
-
-
-
-
-
