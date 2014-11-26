@@ -1,5 +1,8 @@
 library(shiny)
+Sys.setlocale(category = "LC_ALL", locale = "hebrew")
 
+# library(ggplot2)
+# library(ggmap)
 
 # Define UI for miles per gallon application
 shinyUI(fluidPage(
@@ -65,6 +68,7 @@ shinyUI(fluidPage(
     tabsetPanel(
       tabPanel("מידע", dataTableOutput("datatable")),
       tabPanel("מפה", plotOutput("map")),
+	  tabPanel("צפיפות דירות", plotOutput("heat_map")),
       tabPanel("מגמות", plotOutput("trends1"))
     ) 
   )
@@ -72,3 +76,8 @@ shinyUI(fluidPage(
   
 )
 )
+
+
+
+
+
