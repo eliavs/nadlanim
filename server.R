@@ -5,6 +5,7 @@ library(akima)
 library(reshape2)
 library(ggmap)
 library(raster)
+library(plyr)
 options(shiny.maxRequestSize = -1)
 
 shinyServer(function(input, output,session) {
@@ -62,4 +63,15 @@ userdata <- reactive(function(){
    output$heat_map<-renderPlot({
    plotheatmap()},height = 800, width = 1200
   )
+    ##----------------
+  ##build trends
+  #------------------------
+  output$trends<-renderPlot({
+  data<-userdata()
+  data[[5]]<-enc2utf8(data[[5]])
+  data[[1]]<-as.numeric(substr(data[[1]],0,nchar(data[[1]])-3))
+  data[[3]]<-strptime(data[[3]],format="%d.%m.%y")
+  plot(ddply( data , .(V3),summarise ,mean_x=mean(V1) ),type="l", col="red", xlab="תאריך", ylab="ממוצע מחירי הדירות בשקלים", main="מגמת מחירי הדיור")
+  })
+ 
 	})
