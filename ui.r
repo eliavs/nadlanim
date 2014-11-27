@@ -69,7 +69,7 @@ shinyUI(fluidPage(
       tabPanel("מידע", dataTableOutput("datatable")),
       tabPanel("מפה", plotOutput("map")),
 	  tabPanel("צפיפות דירות", plotOutput("heat_map")),
-      tabPanel("מגמות", plotOutput("trends1"))
+      tabPanel("מגמות", plotOutput("trends"))
     ) 
   )
  )
