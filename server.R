@@ -13,7 +13,7 @@ shinyServer(function(input, output,session) {
 ##---------------
 userdata <- reactive(function(){
     	Sys.setlocale(category = "LC_ALL", locale = "hebrew")
-      read.csv("netanya.csv", header=F, stringsAsFactors =F)
+      read.csv("netanya.csv", header=F,stringsAsFactors =F,fileEncoding="windows-1255")
 	 
   # return(data)
 	   
