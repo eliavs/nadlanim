@@ -19,6 +19,23 @@ userdata <- reactive(function(){
   # return(data)
 	   
   })
+ ########----------
+ #rooms dropdown
+ ##----------
+   output$roomsdropdown <- renderUI({
+		data1<-userdata()
+        rooms <- as.numeric(data1$V2)
+        selectInput('חדרים', 'rooms', rooms )
+    })
+#######----------
+#floor dropdown
+#-------------------
+output$floordropdown <- renderUI({
+		data1<-userdata()
+        floor <- data1$V4
+        selectInput('קומה', 'floor', floor )
+    })
+	
  #####--------------------------
  #show the data in a nice fancy data table
  ##--------------------
