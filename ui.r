@@ -31,9 +31,9 @@ shinyUI(fluidPage(
     
      wellPanel(
       helpText(HTML("<b>נתונים בסיסיים</b>"),align="right"),
-      textInput("rooms", "מספר חדרים:", "3"),
-	  textInput("floor", "קומה:", "קרקע"),
-	  textInput("type", "סוג הנכס:", "דירה")
+      uiOutput("roomsdropdown"),
+	  uiOutput("floordropdown"),
+	  textInput("type", "סוג הנכס:", "דירה"),align="right"
       ),
         
     wellPanel(   
