@@ -25,7 +25,7 @@ userdata <- reactive(function(){
    output$roomsdropdown <- renderUI({
 		data1<-userdata()
         rooms <- as.numeric(data1$V2)
-        selectInput('חדרים', 'rooms', rooms )
+        selectInput('חדרים', 'rooms', rooms)
     })
 #######----------
 #floor dropdown
@@ -33,7 +33,7 @@ userdata <- reactive(function(){
 output$floordropdown <- renderUI({
 		data1<-userdata()
         floor <- data1$V4
-        selectInput('קומה', 'floor', floor )
+        selectInput('קומה', 'floor', floor , selected=names(sort(table(floor),decreasing=T)[1]))
     })
 	
  #####--------------------------
@@ -43,6 +43,7 @@ output$floordropdown <- renderUI({
        data1<-userdata()
 	 data1[[5]]<-enc2utf8(data1[[5]])
 	 data1[[1]]<-substr(data1[[1]],0,nchar(data1[[1]])-3)
+	 names(data1)<-c("מחיר","חדרים","תאריך","קומה","כתובת","קו אורך","קו רוחב")
     return(data1)
   })
   
