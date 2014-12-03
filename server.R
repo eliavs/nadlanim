@@ -24,8 +24,9 @@ userdata <- reactive(function(){
  ##----------
    output$roomsdropdown <- renderUI({
 		data1<-userdata()
+		data1<-na.omit(data1)
         rooms <- as.numeric(data1$V2)
-        selectInput('חדרים', 'rooms', rooms)
+        selectInput('room','חדרים', choices=rooms, selected=min(rooms),multiple = T)
     })
 #######----------
 #floor dropdown
@@ -33,7 +34,7 @@ userdata <- reactive(function(){
 output$floordropdown <- renderUI({
 		data1<-userdata()
         floor <- data1$V4
-        selectInput('קומה', 'floor', floor , selected=names(sort(table(floor),decreasing=T)[1]))
+        selectInput('floor','קומה', floor , selected=names(sort(table(floor),decreasing=T)[1]), multiple=T)
     })
 	
  #####--------------------------
@@ -43,7 +44,11 @@ output$floordropdown <- renderUI({
        data1<-userdata()
 	 data1[[5]]<-enc2utf8(data1[[5]])
 	 data1[[1]]<-substr(data1[[1]],0,nchar(data1[[1]])-3)
+	 data1[[2]]<-as.numeric(data1[[2]])
+	 a<-c(input$room)
+	 a<-as.numeric(a)
 	 names(data1)<-c("מחיר","חדרים","תאריך","קומה","כתובת","קו אורך","קו רוחב")
+	 data1<-data1[data1[[2]]==c(a),]
     return(data1)
   })
   
@@ -51,11 +56,16 @@ output$floordropdown <- renderUI({
   ##build the map
   #------------------------
     plotdatamap<-reactive({
-    data<-userdata() 
-	data[[5]]<-enc2utf8(data[[5]])
-	 data[[1]]<-as.numeric(substr(data[[1]],0,nchar(data[[1]])-3))
+    data1<-userdata() 
+	data1[[5]]<-enc2utf8(data1[[5]])
+	 data1[[1]]<-as.numeric(substr(data1[[1]],0,nchar(data1[[1]])-3))
+	  a<-c(input$room)
+	  a<-as.numeric(a)
+	  data1<-data1[data1[[2]]==c(a),]
+	 #  names(data1)<-c("מחיר","חדרים","תאריך","קומה","כתובת","קו אורך","קו רוחב")
     p<-ggmap(get_map(location = c(left = 34.78893, bottom = 32.22034, right =34.93546 , top = 32.40188),maptype="roadmap", scale=4))
-   v<-p+geom_point(aes(x=V6, y=V7, colour = V1, size=V1),data=data, alpa=0.5)+ scale_colour_gradient(low = "blue", high="red")
+   v<-p+geom_point(aes(x=V6, y=V7, colour = V1, size=V2),data=data1, alpa=0.5)+ scale_colour_gradient(low = "blue", high="red")+scale_colour_gradient("מחיר")+scale_size_continuous("מספר חדרים")
+   
     print(v)
   })
   ##------------
