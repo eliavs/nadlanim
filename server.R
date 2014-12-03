@@ -64,7 +64,7 @@ output$floordropdown <- renderUI({
 	  data1<-data1[data1[[2]]==c(a),]
 	 #  names(data1)<-c("מחיר","חדרים","תאריך","קומה","כתובת","קו אורך","קו רוחב")
     p<-ggmap(get_map(location = c(left = 34.78893, bottom = 32.22034, right =34.93546 , top = 32.40188),maptype="roadmap", scale=4))
-   v<-p+geom_point(aes(x=V6, y=V7, colour = V1, size=V2),data=data1, alpa=0.5)+ scale_colour_gradient(low = "blue", high="red")+scale_colour_gradient("מחיר")+scale_size_continuous("מספר חדרים")
+   v<-p+geom_point(aes(x=V6, y=V7, colour = V1,shape=factor(V2)),data=data1, alpa=0.5, size=5)+ scale_colour_gradient("מחיר",low = "blue", high="red")+scale_shape("מספר חדרים")
    
     print(v)
   })
@@ -78,11 +78,14 @@ output$floordropdown <- renderUI({
   ##build the heatmap
   #------------------------
     plotheatmap<-reactive({
-    data<-userdata() 
-	data[[5]]<-enc2utf8(data[[5]])
-	 data[[1]]<-as.numeric(substr(data[[1]],0,nchar(data[[1]])-3))
-    p<-ggmap(get_map(location = c(left = 34.78893, bottom = 32.22034, right =34.93546 , top = 32.40188),maptype="roadmap", scale=4))
-	v<-p+stat_density2d(aes(x=V6, y=V7 ,fill = ..level..),data=data, size=0.5 ,bins=10,geom="polygon",colour = "grey95")+scale_fill_gradient(low = "yellow", high = "red") + scale_alpha(range = c(0.1,1) )
+    data1<-userdata() 
+	data1[[5]]<-enc2utf8(data1[[5]])
+	data1[[1]]<-as.numeric(substr(data1[[1]],0,nchar(data1[[1]])-3))
+	a<-c(input$room)
+	a<-as.numeric(a)
+	data1<-data1[data1[[2]]==c(a),]
+	p<-ggmap(get_map(location = c(left = 34.78893, bottom = 32.22034, right =34.93546 , top = 32.40188),maptype="roadmap", scale=4))
+	v<-p+stat_density2d(aes(x=V6, y=V7 ,fill = ..level..),data=data1, alpha=0.5 ,bins=10,geom="polygon",colour = "grey95")+scale_fill_gradient(low = "yellow", high = "red") 
 	print(v)
 })
  ##------------
